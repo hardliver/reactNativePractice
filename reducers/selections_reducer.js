@@ -4,8 +4,8 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-  selectKeyIndex: 0,
-  selectCapo: 7
+  selectedKeyIndex: 0,
+  selectedCapo: 7
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -13,16 +13,16 @@ export default (state = INITIAL_STATE, action) => {
     case SELECT_KEY_INDEX: {
       return {
         ...state,
-        selectKeyIndex: action.payload
+        selectedKeyIndex: action.payload
       };
     }
     case SELECT_CAPO: {
       return {
         ...state,
-        selectCapo: action.payload
+        selectedCapo: action.payload
       };
     }
     default:
       return state;
   }
-}
+};
