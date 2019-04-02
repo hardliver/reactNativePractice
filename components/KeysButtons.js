@@ -3,6 +3,9 @@ import { View, Dimensions } from 'react-native';
 import { Text, ButtonGroup } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { selectKeyIndex } from '../actions';
+import { BUTTON_GROUP_STYLES } from '../constants'
+import { STATUS_BAR_HEIGHT } from '../constants';
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -14,7 +17,7 @@ class KeysButtons extends Component {
       containerStyle,
       buttonStyle,
       selectedTextStyle
-    } = styles;
+    } = BUTTON_GROUP_STYLES;
 
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -32,20 +35,6 @@ class KeysButtons extends Component {
     );
   }
 }
-
-const styles = {
-  containerStyle: {
-    height: 40,
-    width: SCREEN_WIDTH * 0.9
-  },
-  buttonStyle: {
-    backgroundColor: 'white'
-  },
-  selectedTextStyle: {
-    color: 'orange',
-    fontWeight: '900'
-  }
-};
 
 const mapStateToProps = ({ keys, selectedValues }) => ({ keys, selectedValues });
 
