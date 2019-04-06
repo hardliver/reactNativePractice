@@ -5,6 +5,7 @@ import Expo, { Asset } from 'expo';
 import KeysButtons from '../components/KeysButtons';
 import CapoButtons from '../components/CapoButtons';
 import CapoKey from '../components/CapoKey';
+import ChordsModal from '../modals/ChordsModal'
 import ViewChordsButton from '../components/ViewChordsButton';
 import icon from '../assets/icons/pure-icon.png';
 import { STATUS_BAR_HEIGHT, SCREEN_WIDTH } from '../constants';
@@ -49,7 +50,8 @@ class MainScreen extends Component {
     const { containerStyle, dividerStyle, buttonContainerStyle } = styles;
     return (
       <View style={{ flex: 1, backgroundColor: '#ddd' }}>
-        {/* ChordModal */}
+        <ChordsModal />
+
         <View style={containerStyle}>
           <KeysButtons />
           <Divider style={dividerStyle} />
