@@ -6,6 +6,44 @@ import { closeChordsModal } from '../actions';
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '../constants';
 
 class ChordsModal extends Component {
+  renderChordRow() {
+    const { contentRowStyle, itemContainerStyle, itemStyle } = styles;
+    const { selectedValues: { selectedKeyIndex, selectedCapo }, keys } = this.props;
+
+    let count = 0;
+
+    return keys.map(({ key }) => {
+      const keyChordIndex = (count + selectedKeyIndex) > 11 ?
+        (count + selectedKeyIndex) - 12 : (count + selectedKeyIndex);
+      const capoChordIndex = (keyChordIndex + selectedCapo) > 11 ?
+        (keyChordIndex + selectedCapo) - 12 : (keyChordIndex + selectedCapo);
+
+      count++;
+
+      return (
+        <View key={key} style={contentRowStyle}>
+          <View style={itemContainerStyle}>
+            <Text style={itemStyle}>
+              {keys[keyChordIndex].key}
+            </Text>
+          </View>
+
+          <View style={itemContainerStyle}>
+            <Text style={itemStyle}>
+              =>
+            </Text>
+          </View>
+
+          <View style={itemContainerStyle}>
+            <Text style={itemStyle}>
+              {keys[capoChordIndex].key}
+            </Text>
+          </View>
+        </View>
+      )
+    })
+  }
+
   render() {
     const {
       modalStyle,
@@ -18,6 +56,8 @@ class ChordsModal extends Component {
       itemStyle,
       buttonContainerStyle
     } = styles;
+
+    const { selectedValues: { selectedKeyIndex, selectedCapo }, keys } = this.props;
 
     return (
       <Modal
@@ -38,7 +78,7 @@ class ChordsModal extends Component {
               <View style={contentRowStyle}>
                 <View style={itemContainerStyle}>
                   <Text style={[itemStyle, itemHeadStyle]}>
-                    Key G//
+                    Key {keys[selectedKeyIndex].key}
                   </Text>
                 </View>
 
@@ -50,60 +90,22 @@ class ChordsModal extends Component {
 
                 <View style={itemContainerStyle}>
                   <Text style={[itemStyle, itemHeadStyle]}>
-                    Capo 7// Chords
+                    Capo {selectedCapo} Chords
                   </Text>
                 </View>
               </View>
 
-              <View style={contentRowStyle}>
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    Key G//
-                  </Text>
-                </View>
+              {this.renderChordRow()}
+            </View>
 
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    =>
-                  </Text>
-                </View>
-
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    Capo 7// Chords
-                  </Text>
-                </View>
-              </View>
-
-              <View style={contentRowStyle}>
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    Key G//
-                  </Text>
-                </View>
-
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    =>
-                  </Text>
-                </View>
-
-                <View style={itemContainerStyle}>
-                  <Text style={itemStyle}>
-                    Capo 7// Chords
-                  </Text>
-                </View>
-              </View>
-
-              <View style={buttonContainerStyle}>
-                <Button
-                  raised
-                  icon={{ name: 'close' }}
-                  title="Close"
-                  backgroundColor="#2196F3"
-                  onPress={() => this.props.closeChordsModal()}
-                />
-              </View>
+            <View style={buttonContainerStyle}>
+              <Button
+                raised
+                icon={{ name: 'close' }}
+                title="Close"
+                backgroundColor="#2196F3"
+                onPress={() => this.props.closeChordsModal()}
+              />
             </View>
           </View>
         </View>
@@ -137,7 +139,8 @@ const styles = {
   containStyle: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-around',
+    marginBottom: 10
   },
   contentRowStyle: {
     flex: 1,
